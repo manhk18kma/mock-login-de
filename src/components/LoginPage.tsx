@@ -10,20 +10,18 @@ function LoginPage() {
   const [appCode, setAppCode] = useState("");
 
   useEffect(() => {
-    // Lấy parameters từ URL
+    // Get parameters from URL
     const urlParams = new URLSearchParams(window.location.search);
     let service = urlParams.get("service") || "";
-    const app = urlParams.get("appCode") || "NET_VISION";
+    const app = urlParams.get("appCode") || "";
 
-    // Xóa dấu '/' cuối nếu có
+    // Remove trailing slash if present
     if (service.endsWith("/")) {
       service = service.slice(0, -1);
     }
 
     setServiceUrl(service);
     setAppCode(app);
-
-    console.log("🎭 Mock VSA Login loaded:", { service, appCode: app });
   }, []);
 
   const handleLogin = async (values: {
@@ -31,32 +29,25 @@ function LoginPage() {
     password: string;
   }) => {
     if (!serviceUrl) {
-      message.error("Lỗi: Không có service URL!");
+      message.error("Error: No service URL provided!");
       return;
     }
 
     setLoading(true);
 
-    // Giả lập loading
+    // Simulate processing
     setTimeout(() => {
-      const ticket = values.username; // Sử dụng username làm ticket
+      const ticket = values.username; // Use username as ticket
 
-      console.log("🎫 Mock login successful:", {
-        username: values.username,
-        ticket,
-        serviceUrl,
-      });
+      message.success("Login successful! Redirecting...");
 
-      message.success("Đăng nhập thành công! Chuyển hướng...");
-
-      // Redirect về BE với ticket
+      // Redirect to service with ticket
       setTimeout(() => {
-        // Đảm bảo serviceUrl không có dấu '/' cuối
+        // Ensure serviceUrl has no trailing slash
         const callbackUrl = `${serviceUrl.replace(
           /\/+$/,
           ""
         )}?ticket=${ticket}`;
-        console.log("🔄 Redirecting to:", callbackUrl);
         window.location.href = callbackUrl;
       }, 1000);
     }, 500);
@@ -76,26 +67,26 @@ function LoginPage() {
       <Card style={{ width: "100%", maxWidth: "400px" }}>
         <div style={{ textAlign: "center", marginBottom: "30px" }}>
           <Title level={2} style={{ color: "#1890ff" }}>
-            🔐 VSA Login Portal
+            Login Portal
           </Title>
-          <Text type="secondary">Mock Authentication Service</Text>
+          <Text type="secondary">Authentication Service</Text>
         </div>
 
         <Form
-          initialValues={{ username: "", password: "123456" }}
+          initialValues={{ username: "", password: "" }}
           onFinish={handleLogin}
           size="large"
         >
           <Form.Item
             name="username"
-            rules={[{ required: true, message: "Nhập ticket!" }]}
+            rules={[{ required: true, message: "Please enter username!" }]}
           >
-            <Input prefix={<UserOutlined />} placeholder="Ticket" />
+            <Input prefix={<UserOutlined />} placeholder="Username" />
           </Form.Item>
 
           <Form.Item
             name="password"
-            rules={[{ required: true, message: "Nhập password!" }]}
+            rules={[{ required: true, message: "Please enter password!" }]}
           >
             <Input.Password prefix={<LockOutlined />} placeholder="Password" />
           </Form.Item>
@@ -107,25 +98,10 @@ function LoginPage() {
               loading={loading}
               style={{ width: "100%" }}
             >
-              {loading ? "Đang xử lý..." : "Đăng nhập"}
+              {loading ? "Processing..." : "Login"}
             </Button>
           </Form.Item>
         </Form>
-
-        <div
-          style={{
-            marginTop: "20px",
-            padding: "10px",
-            background: "#f9f9f9",
-            borderRadius: "4px",
-            fontSize: "12px",
-          }}
-        >
-          <Text strong>Connection Info:</Text>
-          <div>Service: {serviceUrl || "N/A"}</div>
-          <div>AppCode: {appCode}</div>
-          <div>Mode: Login</div>
-        </div>
       </Card>
     </div>
   );

@@ -1,7 +1,7 @@
 // src/components/HomePage.tsx
 import React from "react";
 import { Card, Typography, Button, Space, Divider } from "antd";
-import { LoginOutlined, LogoutOutlined, LinkOutlined } from "@ant-design/icons";
+import { LoginOutlined, LogoutOutlined } from "@ant-design/icons";
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -22,7 +22,7 @@ function HomePage() {
       <Card style={{ width: "100%", maxWidth: "600px" }}>
         <div style={{ textAlign: "center", marginBottom: "30px" }}>
           <Title level={2} style={{ color: "#1890ff" }}>
-            🎭 Mock SSO Portal
+            Mock Authentication Portal
           </Title>
           <Text type="secondary">Development Authentication Service</Text>
         </div>
@@ -38,28 +38,17 @@ function HomePage() {
               <Text strong>Parameters:</Text>
               <ul>
                 <li>
-                  <Text code>service</Text> - Callback URL sau khi đăng nhập
+                  <Text code>service</Text> - Callback URL after login
                 </li>
                 <li>
-                  <Text code>appCode</Text> - Mã ứng dụng (mặc định: NET_VISION)
+                  <Text code>appCode</Text> - Application code
                 </li>
               </ul>
-            </Paragraph>
-            <Paragraph>
-              <Text strong>Example:</Text>
-              <br />
-              <Text code>
-                {currentHost}
-                /sso/login?service=http://localhost:5173&appCode=NET_VISION
-              </Text>
             </Paragraph>
             <Button
               type="primary"
               icon={<LoginOutlined />}
-              onClick={() =>
-                (window.location.href =
-                  "/sso/login?service=http://localhost:5173&appCode=NET_VISION")
-              }
+              onClick={() => (window.location.href = "/sso/login")}
             >
               Test Login
             </Button>
@@ -73,31 +62,20 @@ function HomePage() {
               <Text strong>Parameters:</Text>
               <ul>
                 <li>
-                  <Text code>ticket</Text> - Ticket cần xóa khỏi session
+                  <Text code>ticket</Text> - Session ticket to invalidate
                 </li>
                 <li>
-                  <Text code>service</Text> - Callback URL sau khi đăng xuất
+                  <Text code>service</Text> - Callback URL after logout
                 </li>
                 <li>
-                  <Text code>appCode</Text> - Mã ứng dụng
+                  <Text code>appCode</Text> - Application code
                 </li>
               </ul>
-            </Paragraph>
-            <Paragraph>
-              <Text strong>Example:</Text>
-              <br />
-              <Text code>
-                {currentHost}
-                /sso/logout?ticket=ST-123456&service=http://localhost:5173&appCode=NET_VISION
-              </Text>
             </Paragraph>
             <Button
               type="default"
               icon={<LogoutOutlined />}
-              onClick={() =>
-                (window.location.href =
-                  "/sso/logout?ticket=ST-123456&service=http://localhost:5173&appCode=NET_VISION")
-              }
+              onClick={() => (window.location.href = "/sso/logout")}
             >
               Test Logout
             </Button>
@@ -105,7 +83,7 @@ function HomePage() {
         </Space>
 
         <Divider orientation="left" style={{ marginTop: "30px" }}>
-          Mock Behavior
+          System Behavior
         </Divider>
 
         <div
@@ -115,18 +93,18 @@ function HomePage() {
             borderRadius: "4px",
           }}
         >
-          <Text strong>Login Mock:</Text>
+          <Text strong>Login Flow:</Text>
           <ul>
-            <li>Accepts any username/password (default: admin/123456)</li>
-            <li>Generates dynamic ticket: ST-{Date.now()}</li>
-            <li>Redirects to service URL with ticket parameter</li>
+            <li>Accepts user credentials</li>
+            <li>Generates authentication ticket</li>
+            <li>Redirects to service URL with ticket</li>
           </ul>
 
-          <Text strong>Logout Mock:</Text>
+          <Text strong>Logout Flow:</Text>
           <ul>
-            <li>Simulates Hazelcast data removal</li>
-            <li>Handles partner token (PT) special processing</li>
-            <li>Redirects back to service URL after logout</li>
+            <li>Invalidates user session</li>
+            <li>Clears session data</li>
+            <li>Redirects back to service URL</li>
           </ul>
         </div>
       </Card>
