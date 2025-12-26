@@ -8,36 +8,37 @@ const { Title, Text } = Typography;
 function LogoutPage() {
   const [loading, setLoading] = useState(true);
   const [serviceUrl, setServiceUrl] = useState("");
-  const [logoutComplete, setLogoutComplete] = useState(false);
 
   useEffect(() => {
-    // Get parameters from URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const service = urlParams.get("service") || "";
-    const ticketParam = urlParams.get("ticket") || "";
+    try {
+      // Get parameters from URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const service = urlParams.get("service") || "";
+      const ticket = urlParams.get("ticket") || "";
 
-    setServiceUrl(service);
+      console.log('LogoutPage loaded:', { service, ticket });
 
-    // Simulate logout process
-    handleLogout(service);
-  }, []);
+      setServiceUrl(service);
 
-  const handleLogout = (service: string) => {
-    setLoading(true);
+      // Start logout process
+      setTimeout(() => {
+        console.log('Logout process complete');
 
-    // Simulate logout processing
-    setTimeout(() => {
+        if (service) {
+          console.log('Redirecting to:', service);
+          setTimeout(() => {
+            window.location.href = service;
+          }, 1500);
+        } else {
+          setLoading(false);
+        }
+      }, 1000);
+
+    } catch (error) {
+      console.error('LogoutPage error:', error);
       setLoading(false);
-      setLogoutComplete(true);
-
-      // Auto redirect if service URL provided
-      if (service) {
-        setTimeout(() => {
-          window.location.href = service;
-        }, 500);
-      }
-    }, 1000);
-  };
+    }
+  }, []);
 
   if (loading) {
     return (
@@ -57,7 +58,9 @@ function LogoutPage() {
             <Title level={3} style={{ color: "#ff4d4f" }}>
               Processing logout...
             </Title>
-            <Text type="secondary">Please wait while we log you out</Text>
+            <Text type="secondary">
+              {serviceUrl ? "Redirecting to application..." : "Please wait while we log you out"}
+            </Text>
           </div>
         </Card>
       </div>
@@ -79,27 +82,8 @@ function LogoutPage() {
         <Result
           icon={<CheckCircleOutlined style={{ color: "#52c41a" }} />}
           title="Logout Successful!"
-          subTitle={
-            serviceUrl
-              ? "Redirecting to application..."
-              : "You have been logged out of the system."
-          }
+          subTitle="You have been logged out of the system."
         />
-
-        <div
-          style={{
-            marginTop: "20px",
-            padding: "10px",
-            background: "#f6ffed",
-            borderRadius: "4px",
-            fontSize: "12px",
-            border: "1px solid #b7eb8f",
-          }}
-        >
-          <Text strong style={{ color: "#52c41a" }}>
-            Logout completed successfully
-          </Text>
-        </div>
       </Card>
     </div>
   );

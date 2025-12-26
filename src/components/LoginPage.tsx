@@ -33,11 +33,16 @@ function LoginPage() {
       return;
     }
 
+    if (!values.username) {
+      message.error("Please enter username!");
+      return;
+    }
+
     setLoading(true);
 
-    // Simulate processing
+    // Simulate processing - mock authentication only needs username
     setTimeout(() => {
-      const ticket = values.username; // Use username as ticket
+      const ticket = values.username; // Use username as ticket for mock
 
       message.success("Login successful! Redirecting...");
 
@@ -79,16 +84,15 @@ function LoginPage() {
         >
           <Form.Item
             name="username"
-            rules={[{ required: true, message: "Please enter username!" }]}
+            rules={[{ required: true, message: "Please enter ticket/username!" }]}
           >
-            <Input prefix={<UserOutlined />} placeholder="Username" />
+            <Input prefix={<UserOutlined />} placeholder="Ticket/Username" />
           </Form.Item>
 
           <Form.Item
             name="password"
-            rules={[{ required: true, message: "Please enter password!" }]}
           >
-            <Input.Password prefix={<LockOutlined />} placeholder="Password" />
+            <Input.Password prefix={<LockOutlined />} placeholder="Password (optional)" />
           </Form.Item>
 
           <Form.Item>
