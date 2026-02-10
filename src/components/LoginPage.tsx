@@ -7,7 +7,6 @@ const { Title, Text } = Typography;
 function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [serviceUrl, setServiceUrl] = useState("");
-  const [appCode, setAppCode] = useState("");
 
   useEffect(() => {
     // Get parameters from URL
@@ -25,7 +24,6 @@ function LoginPage() {
     console.log("urlParams", urlParams);
 
     setServiceUrl(service);
-    setAppCode(app);
   }, []);
 
   const handleLogin = async (values: {
