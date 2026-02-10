@@ -16,6 +16,10 @@ function LogoutPage() {
     const service = urlParams.get("service") || "";
     const ticketParam = urlParams.get("ticket") || "";
 
+    console.log("ticket", ticketParam);
+    console.log("service", service);
+    console.log("urlParams", urlParams);
+
     setServiceUrl(service);
 
     // Simulate logout process
