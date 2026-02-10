@@ -20,7 +20,7 @@ function LoginPage() {
       service = service.slice(0, -1);
     }
 
-    console.log("app", appCode);
+    console.log("app", app);
     console.log("service", service);
     console.log("urlParams", urlParams);
 

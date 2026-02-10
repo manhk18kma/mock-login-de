@@ -8,7 +8,6 @@ const { Title, Text } = Typography;
 function LogoutPage() {
   const [loading, setLoading] = useState(true);
   const [serviceUrl, setServiceUrl] = useState("");
-  const [logoutComplete, setLogoutComplete] = useState(false);
 
   useEffect(() => {
     // Get parameters from URL
@@ -32,8 +31,6 @@ function LogoutPage() {
     // Simulate logout processing
     setTimeout(() => {
       setLoading(false);
-      // Redirect to service: base/#/authorize?ticket=...
-      setLogoutComplete(true);
 
       // Auto redirect if service URL provided
       if (service) {
