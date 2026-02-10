@@ -28,6 +28,7 @@ function LogoutPage() {
     // Simulate logout processing
     setTimeout(() => {
       setLoading(false);
+      // Redirect to service: base/#/authorize?ticket=...
       setLogoutComplete(true);
 
       // Auto redirect if service URL provided
